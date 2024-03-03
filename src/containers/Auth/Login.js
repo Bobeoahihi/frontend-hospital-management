@@ -14,9 +14,10 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'xinchao',
+            username: '',
             password: 'bannhe',
             isShowPassword: false,
+            errMessage: ''
         }
 
     }
@@ -34,9 +35,34 @@ class Login extends Component {
 
     }
     handleLogin = async () => {
-        console.log('username: ', this.state.username, 'password:', this.state.password);
-        console.log('all state', this.state)
-        await handleLoginApi(this.state.username, this.state.password)
+        this.setState({
+            errMessage: ''
+        })
+        try {
+            let data = await handleLoginApi(this.state.username, this.state.password);
+
+            if (data && data.errCode !== 0) {
+                this.setState({
+                    errMessage: data.message,
+                })
+                console.log("Ko login ddc")
+            }
+            if (data && data.errCode === 0) {
+                this.props.userLoginSuccess(data.user)
+
+            }
+        } catch (error) {
+            if (error.response) {
+                if (error.response.data) {
+                    this.setState({
+                        errMessage: error.response.data.message
+                    })
+                }
+            }
+            console.log('Hoidanit', error.response)
+
+        }
+
 
     }
     handleShowHidePassword = () => {
@@ -70,10 +96,13 @@ class Login extends Component {
                                     onChange={(event) => this.handleOnChangePassword(event)}></input>
                                 <span
                                     onClick={() => { this.handleShowHidePassword() }}>
-                                    <i class={this.state.isShowPassword ? "far fa-eye" : "fas fa-eye-slash"}></i>
+                                    <i className={this.state.isShowPassword ? "far fa-eye" : "fas fa-eye-slash"}></i>
                                 </span>
                             </div>
 
+                        </div>
+                        <div className='col-12' style={{ color: 'red' }}>
+                            {this.state.errMessage}
                         </div>
                         <div className='col-12'>
                             <button className='btn-login'
@@ -106,8 +135,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
-        adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
-        adminLoginFail: () => dispatch(actions.adminLoginFail()),
+        // userLoginFail: () => dispatch(actions.adminLoginFail()),
+        userLoginSuccess: (userInfo) => dispatch(actions.userLoginSuccess(userInfo)),
     };
 };
 
