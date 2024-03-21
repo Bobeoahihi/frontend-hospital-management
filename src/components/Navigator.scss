@@ -36,7 +36,7 @@
             padding: 0;
 
             .menu {
-                width: 205px;
+                width: 100%;
                 padding: 0 15px;
                 height: 35px;
                 line-height: 35px;
@@ -56,7 +56,7 @@
                     color: $text-in-light;
                 }
 
-                .sub-menu-list {
+                menu-list .sub- {
                     display: none;
                     background-color: $bg-menu-color;
                     box-shadow: 2px 2px 4px 0 $box-shadow-color;
