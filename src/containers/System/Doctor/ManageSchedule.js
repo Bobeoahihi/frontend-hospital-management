@@ -10,6 +10,7 @@ import moment from 'moment' //format date
 import { toast } from 'react-toastify';
 import _ from 'lodash';
 import { isTemplateLiteral } from 'typescript';
+import { saveBulkScheduleDoctor } from '../../../services/userService';
 class ManageSchedule extends Component {
     constructor(props) {
         super(props);
@@ -84,7 +85,7 @@ class ManageSchedule extends Component {
             })
         }
     }
-    handleChangeSchedule = () => {
+    handleChangeSchedule = async () => {
         let { rangeTime, listDoctors, currentDate, selectedDoctor } = this.state
         let result = []
         if (!currentDate) {
@@ -95,7 +96,7 @@ class ManageSchedule extends Component {
             toast.error('Invalid doctor')
             return;
         }
-        let formattedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER)
+        let formattedDate = new Date(currentDate).getTime()
         if (rangeTime && rangeTime.length > 0) {
             let selectedTime = rangeTime.filter(item => item.isSelected === true)
             if (selectedTime && selectedTime.length > 0) {
@@ -103,7 +104,7 @@ class ManageSchedule extends Component {
                     let object = {};
                     object.doctorId = selectedDoctor.value;
                     object.date = formattedDate;
-                    object.time = schedule.keyMap
+                    object.timeType = schedule.keyMap
                     result.push(object)
                 })
             } else {
@@ -111,8 +112,12 @@ class ManageSchedule extends Component {
                 return;
             }
         }
-
-        console.log('check result', result)
+        let res = await saveBulkScheduleDoctor({
+            arrSchedule: result,
+            doctorId: selectedDoctor.value,
+            formattedDate: formattedDate
+        })
+        console.log('check result: saveBulkScheduleDoctor', res)
 
     }
     render() {
