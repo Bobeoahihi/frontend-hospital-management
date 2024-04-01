@@ -5,6 +5,7 @@ import * as actions from '../../../store/actions';
 import { LANGUAGE } from '../../../utils'
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
+import './Specialty.scss'
 class OutStandingDoctor extends Component {
     constructor(props) {
         super(props)
@@ -57,12 +58,12 @@ class OutStandingDoctor extends Component {
                                     return (
                                         <div className='section-customize' key={index}
                                             onClick={() => this.handleViewDetailDoctor(item)}>
-                                            <div className='customize-border'>
+                                            <div className='customize-border specialty-child '>
                                                 <div className='outer-bg'>
                                                     <div className='bg-image section-outstanding-doctor '
                                                         style={{ backgroundImage: `url(${imageBase64})` }} />
                                                 </div>
-                                                <div className='position text-center'>
+                                                <div className='position text-center specialty-name'>
                                                     <div>{language === LANGUAGE.VI ? nameVi : nameEn}</div>
                                                     <div>Cơ xương khớp 1</div>
                                                 </div>

@@ -59,7 +59,7 @@ class Login extends Component {
                     })
                 }
             }
-            console.log('Hoidanit', error.response)
+            console.log('Error login', error.response)
 
         }
 
