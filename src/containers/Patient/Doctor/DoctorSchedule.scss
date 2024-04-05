@@ -3,6 +3,16 @@
     height: 100%;
 
     .all-schedule {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+
+        .all-schedule-intro {
+            display: flex;
+            align-items: center;
+            font-style: italic;
+        }
+
         select {
             border-bottom: 1px solid #ddd;
             border-top: none;

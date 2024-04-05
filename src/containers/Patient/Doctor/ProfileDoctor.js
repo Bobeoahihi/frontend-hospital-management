@@ -7,6 +7,7 @@ import { getProfileDoctorById } from '../../../services/userService';
 import NumberFormat from 'react-number-format';
 import _ from 'lodash';
 import moment from 'moment';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 class ProfileDoctor extends Component {
     constructor(props) {
         super(props)
@@ -26,6 +27,10 @@ class ProfileDoctor extends Component {
         }
         if (this.props.doctorId !== prevProps.doctorId) {
             // this.getInforDoctor(this.props.doctorId)
+            let data = await this.getInforDoctor(this.props.doctorId);
+            this.setState({
+                dataProfile: data,
+            })
         }
     }
     getInforDoctor = async (id) => {
@@ -62,7 +67,8 @@ class ProfileDoctor extends Component {
     }
     render() {
         let { dataProfile } = this.state;
-        let { language, isShowDescriptionDoctor, dataTime } = this.props
+        let { language, isShowDescriptionDoctor, dataTime,
+            isShowPrice, isShowLinkDetail, doctorId } = this.props
         let nameVi = '', nameEn = '';
         if (dataProfile && dataProfile.positionData) {
             nameVi = `${dataProfile.positionData.valueVi}, ${dataProfile.lastName} ${dataProfile.firstName}`
@@ -97,30 +103,37 @@ class ProfileDoctor extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='price'>
-                    <FormattedMessage id='patient.booking-modal.price' />
-                    {dataProfile && dataProfile.Doctor_infor && language === LANGUAGE.VI &&
+                {isShowLinkDetail === true &&
+                    <div className='view-detail-doctor'>
+                        <Link to={`/detail-doctor/${doctorId}`}>Xem thêm</Link>
+                    </div>
+                }
+                {isShowPrice === true &&
+                    <div className='price'>
+                        <FormattedMessage id='patient.booking-modal.price' />
+                        {dataProfile && dataProfile.Doctor_infor && language === LANGUAGE.VI &&
 
-                        <NumberFormat
-                            className='currency'
-                            value={dataProfile.Doctor_infor.priceTypeData.valueVi}
-                            displayType='text'
-                            thousandSeparator={true}
-                            suffix='VND'
+                            <NumberFormat
+                                className='currency'
+                                value={dataProfile.Doctor_infor.priceTypeData.valueVi}
+                                displayType='text'
+                                thousandSeparator={true}
+                                suffix='VND'
 
-                        />
-                    }
-                    {dataProfile && dataProfile.Doctor_infor && language === LANGUAGE.EN &&
-                        <NumberFormat
-                            className='currency'
-                            value={dataProfile.Doctor_infor.priceTypeData.valueEn}
-                            displayType='text'
-                            thousandSeparator={true}
-                            suffix='$'
+                            />
+                        }
+                        {dataProfile && dataProfile.Doctor_infor && language === LANGUAGE.EN &&
+                            <NumberFormat
+                                className='currency'
+                                value={dataProfile.Doctor_infor.priceTypeData.valueEn}
+                                displayType='text'
+                                thousandSeparator={true}
+                                suffix='$'
 
-                        />
-                    }
-                </div>
+                            />
+                        }
+                    </div>
+                }
             </div>
 
 

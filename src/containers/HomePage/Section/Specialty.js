@@ -50,7 +50,7 @@ class Specialty extends Component {
         let language = this.props.language;
         let { dataSpecialty } = this.state
         return (
-            <div className='section-share section-specialty'>
+            <div className='section-share section-child'>
                 <div className='section-container'>
                     <div className='section-header'>
                         <span className='title-section'><FormattedMessage id="homepage.popular-specialty" /></span>
@@ -61,7 +61,7 @@ class Specialty extends Component {
                             {dataSpecialty && dataSpecialty.length > 0 &&
                                 dataSpecialty.map((item, index) => {
                                     return (
-                                        <div className='section-customize specialty-child' key={index}
+                                        <div className='section-customize clinic-child' key={index}
                                             onClick={() => this.handleVIewDetailSpecialty(item)}
                                         >
                                             <div className='bg-image section-specialty'

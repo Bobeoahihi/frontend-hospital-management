@@ -22,6 +22,12 @@ class DoctorSchedule extends Component {
         let { language } = this.props;
         let allDay = this.getArrayDays(language)
 
+        if (this.props.doctorIdFromParent) {
+            let res = await getScheduleDoctorByDate(this.props.doctorIdFromParent, allDay[0].value)
+            this.setState({
+                allAvailableTime: res.data ? res.data : []
+            })
+        }
         this.setState({
             allDay: allDay,
         })
@@ -110,6 +116,7 @@ class DoctorSchedule extends Component {
             <>
                 < div className='doctor-schedule-container' >
                     <div className='all-schedule'>
+
                         <select
                             onChange={(event) => this.handleOnChangeSelect(event)}
                         >
@@ -125,6 +132,9 @@ class DoctorSchedule extends Component {
                                     )
                                 })}
                         </select>
+                        <div className='all-schedule-intro'>
+                            (Lựa chọn ngày khám bệnh.)
+                        </div>
                     </div>
                     <div className='all-available-time'>
                         <div className='text-calendar'>
