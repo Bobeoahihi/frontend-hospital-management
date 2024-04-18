@@ -16,6 +16,8 @@ import Doctor from '../routes/Doctor.js';
 import VerifyEmail from './Patient/VerifyEmail.js';
 import DetailSpecialty from './Patient/Specialty/DetailSpecialty.js';
 import DetailClinic from './Patient/Clinic/DetailClinic.js';
+import DetailPatient from './Patient/Information/DetailPatient.js';
+import BookingHistory from './Patient/Information/BookingHistory.js';
 class App extends Component {
 
     handlePersistorState = () => {
@@ -46,7 +48,7 @@ class App extends Component {
                         <div className="content-container">
                             <CustomScrollbars style={{ height: '100vh', width: '100%' }}>
                                 <Switch>
-                                    <Route path={path.HOME} exact component={(Home)} />
+                                    <Route path={path.HOME} exact component={userIsNotAuthenticated(Home)} />
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
@@ -55,8 +57,10 @@ class App extends Component {
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                                     <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
                                     <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
+                                    <Route path={path.DETAIL_PATIENT} component={DetailPatient} />
 
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
+                                    <Route path={path.BOOKING_HISTORY} component={BookingHistory} />
 
 
                                 </Switch>

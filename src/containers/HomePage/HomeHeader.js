@@ -6,8 +6,28 @@ import logo from '../../assets/images/logo.svg'
 import { LANGUAGE } from "../../utils"
 import { changeLanguageApp } from '../../store/actions/appActions';
 import { withRouter } from 'react-router';
+import LoginPatient from '../Patient/Login-Register/LoginPatient';
+import InforDropdown from '../Patient/Information/InforDropdown';
 class HomeHeader extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpenLogin: false,
+            openPatientInfor: false,
+        }
+
+    }
+    async componentDidMount() {
+
+    }
+    async componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.patientInfo !== prevProps.patientInfo) {
+            this.setState({
+                openPatientInfor: false,
+            })
+        }
+    }
     changeLanguage = (language) => {
         this.props.changeLanguageAppRedux(language);
         //fire redux event: actions
@@ -17,9 +37,29 @@ class HomeHeader extends Component {
             this.props.history.push(`/home`)
         }
     }
+    openLogin = (openLogin) => {
+        this.setState({
+            isOpenLogin: openLogin
+        })
+    }
+    closeLogin = () => {
+        this.setState({
+            isOpenLogin: false
+        })
+    }
+    handleAvatarClick = () => {
+        this.setState({
+            openPatientInfor: !this.state.openPatientInfor
+        })
+    }
+
 
     render() {
-        let language = this.props.language;
+        let { language, patientLoggined, patientInfo } = this.props;
+        // let { openLogin } = this.props
+        let { isOpenLogin, openPatientInfor } = this.state
+        console.log('patientInfo', this.props.patientInfo)
+        console.log('patientLoggined', this.props.patientLoggined)
         return (
             <React.Fragment>
                 <div className='home-header-container'>
@@ -51,6 +91,20 @@ class HomeHeader extends Component {
                             <div className='support'>
                                 <i className="fas fa-question-circle"> <FormattedMessage id="home-header.support" /></i>
                             </div>
+                            {!patientLoggined ?
+                                <div className='loginHome'>
+                                    <button onClick={() => this.openLogin(true)}>Đăng nhập</button>
+                                </div>
+                                :
+                                <div className='patient-avatar'>
+                                    <div className='patient-img' style={{ backgroundImage: `url(${patientInfo && patientInfo.image ? patientInfo.image : ''})` }}
+                                        onClick={() => this.handleAvatarClick()}
+                                    ></div>
+                                    {openPatientInfor && <InforDropdown
+                                        patientInfo={patientInfo}
+                                    />}
+                                </div>
+                            }
                             <div className={language === LANGUAGE.VI ? 'language-vi active' : 'language-vi'}><span onClick={() => { this.changeLanguage(LANGUAGE.VI) }}>VN</span></div>
                             <div className={language === LANGUAGE.EN ? 'language-en active' : 'language-en'}><span onClick={() => { this.changeLanguage(LANGUAGE.EN) }}>EN</span></div>
                         </div>
@@ -110,6 +164,12 @@ class HomeHeader extends Component {
 
                     </div>
                 }
+                <LoginPatient
+                    isOpenLogin={isOpenLogin}
+                    closeLogin={this.closeLogin}
+                // getUserInfor={(data) => this.getUserInfor(data)}
+                />
+
             </React.Fragment>
         );
     }
@@ -118,8 +178,9 @@ class HomeHeader extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
+        patientLoggined: state.patient.patientLoggined,
+        patientInfo: state.patient.patientInfo,
     };
 };
 

@@ -54,7 +54,7 @@ class TableManageUser extends Component {
         let arrUsers = this.state.usersRedux
         return (
             <React.Fragment>
-                <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
+                {/* <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} /> */}
                 <table id='TableManageUser'>
                     <tbody>
                         <tr>

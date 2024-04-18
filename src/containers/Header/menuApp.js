@@ -74,3 +74,22 @@ export const doctorMenu = [
         ]
     }
 ];
+export const managerMenu = [
+    {
+        name: 'menu.admin.manage-doctor',
+        menus: [
+            {
+                name: 'menu.admin.manage-doctor', link: '/system/user-redux'
+            }
+        ]
+    },
+    {//Quản lý chuyên khoa
+        name: 'menu.admin.specialty',
+        menus: [
+            {
+                name: 'menu.admin.manage-specialty', link: '/system/manage-specialty'
+            },
+
+        ]
+    },
+]

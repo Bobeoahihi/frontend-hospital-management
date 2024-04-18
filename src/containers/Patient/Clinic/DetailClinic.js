@@ -16,6 +16,7 @@ class DetailClinic extends Component {
         this.state = {
             arrDoctorId: [],
             dataDetailClinic: {},
+            listSpecialty: [],
         }
     }
     async componentDidMount() {
@@ -24,7 +25,6 @@ class DetailClinic extends Component {
             let res = await getAllDetailClinicById({
                 id: id,
             })
-            console.log('res', res)
             if (res && res.errCode === 0) {
                 let data = res.data
                 let arrDoctorId = []
@@ -69,6 +69,19 @@ class DetailClinic extends Component {
                         }
 
                     </div>
+                    {/* <div className='search-sp-doctor'>
+                        <select onChange={(event) => this.handleOnChangeSelect(event)}>
+                            {listProvince && listProvince.length > 0 &&
+                                listProvince.map((item, index) => {
+                                    return (
+                                        <option key={index}
+                                            value={item.keyMap}
+                                        >{language === LANGUAGE.VI ? item.valueVi : item.valueEn}</option>
+                                    )
+                                })
+                            }
+                        </select>
+                    </div> */}
                     {
                         arrDoctorId && arrDoctorId.length > 0 &&
                         arrDoctorId.map((item, index) => {

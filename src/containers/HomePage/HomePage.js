@@ -11,11 +11,31 @@ import './HomePage.scss'
 //Import css files
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
+import LoginPatient from '../Patient/Login-Register/LoginPatient';
 class HomePage extends Component {
     // handleAfterChange = (index, dontAnimate) => {
     //     console.log('currentslide', index)
     // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            // isOpenLogin: false,
+        }
+
+    }
+
+    // openLogin = (openLogin) => {
+    //     this.setState({
+    //         isOpenLogin: openLogin
+    //     })
+    // }
+    // closeLogin = () => {
+    //     this.setState({
+    //         isOpenLogin: false
+    //     })
+    // }
     render() {
+        // let { isOpenLogin } = this.state
         let settings = {
             dots: false,
             infinite: true,
@@ -28,8 +48,10 @@ class HomePage extends Component {
             // prevArrow: <SamplePrevArrow />
         }
         return (
-            <div>
-                <HomeHeader isShowBanner={true} />
+            <>
+                <HomeHeader isShowBanner={true}
+                // openLogin={this.openLogin}
+                />
                 <Specialty
                     settings={settings} />
                 <MedicalFacility
@@ -38,7 +60,11 @@ class HomePage extends Component {
                 <HandBook settings={settings} />
                 <About />
                 <HomeFooter />
-            </div >
+                {/* <LoginPatient
+                    isOpenLogin={isOpenLogin}
+                    closeLogin={this.closeLogin}
+                /> */}
+            </ >
         );
     }
 

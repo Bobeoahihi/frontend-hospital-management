@@ -61,6 +61,13 @@ const postPatientBookAppointment = (data) => {
 const postVerifyBookAppointment = (data) => {
     return axios.post(`/api/verify-book-appointment`, data)
 }
+const postNewPatient = (data) => {
+    return axios.post(`/api/create-new-patient`, data)
+}
+const postLoginPatient = (data) => {
+    return axios.post(`/api/patient-login`, data)
+}
+
 const createNewSpecialty = (data) => {
     return axios.post(`/api/create-new-specialty`, data)
 }
@@ -69,6 +76,16 @@ const getAllSpecialty = () => {
 }
 const getAllDetailSpecialtyById = (data) => {
     return axios.get(`/api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`)
+}
+const editSpecialty = (data) => {
+    return axios.put(`/api/edit-specialty`, data)
+}
+const deleteSpecialty = (specialtyId) => {
+    return axios.delete(`/api/delete-specialty`, {
+        data: {
+            id: specialtyId,
+        }
+    })
 }
 const createNewClinic = (data) => {
     return axios.post(`/api/create-new-clinic`, data)
@@ -85,6 +102,16 @@ const getAllPatientForDoctor = (data) => {
 const postSendRemedy = (data) => {
     return axios.post(`/api/send-remedy`, data)
 }
+const getPatientById = (patientId) => {
+    return axios.get(`api/get-patient-by-id?id=${patientId}`)
+}
+
+const postEditPatient = (data) => {
+    return axios.post(`/api/handle-edit-patient`, data)
+}
+const getAllAppointmentHistory = (inputId) => {
+    return axios.get(`api/get-all-booking-history?id=${inputId}`)
+}
 export {
     handleLoginApi, getAllUsers,
     createNewuserService, deleteUserService,
@@ -96,5 +123,7 @@ export {
     postPatientBookAppointment, postVerifyBookAppointment,
     createNewSpecialty, getAllSpecialty, getAllDetailSpecialtyById,
     createNewClinic, getAllClinic, getAllDetailClinicById,
-    getAllPatientForDoctor, postSendRemedy
+    getAllPatientForDoctor, postSendRemedy, postNewPatient,
+    postLoginPatient, getPatientById, postEditPatient,
+    getAllAppointmentHistory, editSpecialty, deleteSpecialty
 }

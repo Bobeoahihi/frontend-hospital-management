@@ -197,15 +197,15 @@ class UserRedux extends Component {
     }
     render() {
 
-        // console.log('check state', this.state)
+        console.log('check state', this.state)
         let genders = this.state.genderArr
+        console.log('genders', genders)
         let roles = this.state.roleArr
         let positions = this.state.positionArr
         let language = this.props.language
         let isGetGender = this.props.isLoadingGender
         let { email, password, firstName, lastName, phoneNumber,
             address, gender, position, role, avatar } = this.state
-        console.log('check props from redux', this.props.genderRedux)
         return (
             <div className='user-redux-container'>
                 <div className='title'>

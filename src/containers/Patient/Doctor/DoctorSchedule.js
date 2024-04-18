@@ -111,7 +111,7 @@ class DoctorSchedule extends Component {
 
     render() {
         let { allDay, allAvailableTime, isOpenModalBooking, dataScheduleTimeModal } = this.state
-        let { language } = this.props;
+        let { language, patientInfo } = this.props;
         return (
             <>
                 < div className='doctor-schedule-container' >
@@ -176,6 +176,7 @@ class DoctorSchedule extends Component {
                     isOpenModal={isOpenModalBooking}
                     closeBookingModal={this.closeBookingModal}
                     dataTime={dataScheduleTimeModal}
+                    patient={patientInfo}
                 />
             </>
         );
@@ -185,6 +186,7 @@ class DoctorSchedule extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
+        patientInfo: state.patient.patientInfo,
     };
 };
 

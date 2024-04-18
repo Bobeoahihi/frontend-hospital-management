@@ -45,7 +45,7 @@ class Login extends Component {
                 this.setState({
                     errMessage: data.message,
                 })
-                console.log("Ko login ddc")
+                console.log("Ko login dc")
             }
             if (data && data.errCode === 0) {
                 this.props.userLoginSuccess(data.user)

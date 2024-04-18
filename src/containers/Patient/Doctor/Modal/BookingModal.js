@@ -30,6 +30,17 @@ class BookingModal extends Component {
     }
     async componentDidMount() {
         this.props.getGenders()
+        let patient = this.props.patient
+        if (patient) {
+            this.setState({
+                fullName: patient.firstName,
+                phoneNumber: patient.phonenumber,
+                email: patient.email,
+                address: patient.address,
+            })
+
+
+        }
     }
     buildDataGender = (data) => {
         let result = [];
