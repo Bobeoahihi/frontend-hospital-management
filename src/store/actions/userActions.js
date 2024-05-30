@@ -1,3 +1,4 @@
+import { deleteToken } from '../../services/userService';
 import actionTypes from './actionTypes';
 
 export const addUserSuccess = () => ({
@@ -13,6 +14,25 @@ export const userLoginFail = () => ({
     type: actionTypes.USER_LOGIN_FAIL
 })
 
-export const processLogout = () => ({
+// export const processLogout = async () => {
+//     return async (dispatch) => {
+//         await deleteToken();
+//         dispatch(logoutSuccess())
+//     }
+
+// }
+export const processLogout = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await deleteToken()
+            // dispatch({ type: actionTypes.PROCESS_LOGOUT })
+            dispatch(logoutSuccess())
+        } catch (e) {
+            console.log("fetchGenderStart Error", e)
+        }
+    }
+
+}
+export const logoutSuccess = () => ({
     type: actionTypes.PROCESS_LOGOUT
 })

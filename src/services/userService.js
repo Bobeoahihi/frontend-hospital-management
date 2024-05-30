@@ -1,5 +1,14 @@
 
 import axios from '../axios'
+//refresh_token
+const refreshToken = () => {
+    return axios.post('/api/refresh')
+}
+const deleteToken = () => {
+    localStorage.clear()
+    return axios.post('/api/clear')
+}
+
 const handleLoginApi = (userEmail, userPassword) => {
 
     let data = JSON.stringify({
@@ -46,6 +55,9 @@ const getDetailInforDoctor = (inputId) => {
 const saveBulkScheduleDoctor = (data) => {
     return axios.post(`/api/bulk-create-schedule`, data)
 }
+const saveBulkSpecialtyClinic = (data) => {
+    return axios.post(`/api/bulk-create-specialty`, data)
+}
 const getScheduleDoctorByDate = (inputId, date) => {
     return axios.get(`/api/get-schedule-doctor-by-date?doctorId=${inputId}&date=${date}`)
 }
@@ -65,7 +77,15 @@ const postNewPatient = (data) => {
     return axios.post(`/api/create-new-patient`, data)
 }
 const postLoginPatient = (data) => {
-    return axios.post(`/api/patient-login`, data)
+    return axios.post(`/api/patient-login`,
+        {
+            email: data.email,
+            password: data.password,
+        }
+    )
+}
+const getAccountPatient = () => {
+    return axios.get('/account')
 }
 
 const createNewSpecialty = (data) => {
@@ -93,14 +113,56 @@ const createNewClinic = (data) => {
 const getAllClinic = () => {
     return axios.get(`/api/get-clinic`)
 }
+const getClinicPaginate = (page, limit) => {
+    return axios.get(`/api/get-clinic-paginate?page=${page}&limit=${limit}`)
+}
 const getAllDetailClinicById = (data) => {
     return axios.get(`/api/get-detail-clinic-by-id?id=${data.id}`)
 }
+const editClinic = (data) => {
+    return axios.put(`/api/edit-clinic`, data)
+}
+const deleteClinic = (clinicId) => {
+    return axios.delete(`/api/delete-clinic`, {
+        data: {
+            id: clinicId,
+        }
+    })
+}
+
 const getAllPatientForDoctor = (data) => {
     return axios.get(`/api/get-list-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`)
 }
-const postSendRemedy = (data) => {
-    return axios.post(`/api/send-remedy`, data)
+const postSendRemedy = (dataAxios) => {
+    //Tạo form để gửi file đi kèm
+    const data = new FormData();
+    data.append('file', dataAxios.selectedFile);
+
+    // Append other data from JSON object to FormData
+    Object.keys(dataAxios).forEach(key => {
+        if (key !== 'file') {
+            data.append(key, dataAxios[key]);
+        }
+    });
+    return axios.post(`/api/send-remedy`, data, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
+const downloadFileAttachment = (fileName) => {
+    axios.get(`/api/get-file-appoinment?filename=${fileName}`, { responseType: 'arraybuffer', }).then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    })
+        .catch(error => {
+            console.error('Lỗi khi tải tệp', error);
+        });
 }
 const getPatientById = (patientId) => {
     return axios.get(`api/get-patient-by-id?id=${patientId}`)
@@ -125,5 +187,7 @@ export {
     createNewClinic, getAllClinic, getAllDetailClinicById,
     getAllPatientForDoctor, postSendRemedy, postNewPatient,
     postLoginPatient, getPatientById, postEditPatient,
-    getAllAppointmentHistory, editSpecialty, deleteSpecialty
+    getAllAppointmentHistory, editSpecialty, deleteSpecialty,
+    editClinic, deleteClinic, saveBulkSpecialtyClinic, getClinicPaginate,
+    refreshToken, deleteToken, downloadFileAttachment, getAccountPatient,
 }

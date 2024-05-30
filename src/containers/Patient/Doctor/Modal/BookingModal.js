@@ -31,6 +31,7 @@ class BookingModal extends Component {
     async componentDidMount() {
         this.props.getGenders()
         let patient = this.props.patient
+        console.log('patient', patient)
         if (patient) {
             this.setState({
                 fullName: patient.firstName,

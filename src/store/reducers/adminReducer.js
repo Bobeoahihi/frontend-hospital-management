@@ -14,6 +14,7 @@ const initialState = {
     positions: [],
     users: [],
     specialties: [],
+    clinics: [],
     topDoctors: [],
     allDoctors: [],
     allRequiredDoctorInfor: [],
@@ -122,6 +123,16 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_ALL_SPECIALTY_FAILED:
             state.specialties = []
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ALL_CLINIC_SUCCESS:
+            state.clinics = action.clinics;
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ALL_CLINIC_FAILED:
+            state.clinics = []
             return {
                 ...state,
             }

@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { postNewPatient, postLoginPatient, postEditPatient } from '../../services/userService';
+import { postNewPatient, postLoginPatient, postEditPatient, getAccountPatient } from '../../services/userService';
 import { toast } from 'react-toastify';
 export const createNewPatient = (data) => {
     return async (dispatch, getState) => {
@@ -36,6 +36,7 @@ export const patientLogin = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await postLoginPatient(data);
+            console.log('test login', res)
             if (res && res.errCode === 0) {
                 toast.success('Login success')
                 dispatch(patientLoginSuccess(res.user));
@@ -88,6 +89,21 @@ export const processPatientLogout = () => {
 export const patientLogoutSuccess = () => ({
     type: actionTypes.PROCESS_PATIENT_LOGOUT
 })
+export const doGetAccount = () => {
+    return async (dispatch, getState) => {
+
+        try {
+            let patient = await getAccountPatient();
+            if (patient) {
+                dispatch(patientLoginSuccess(patient.user))
+            } else {
+                dispatch(patientLoginFail())
+            }
+        } catch (e) {
+            console.log('getaccount error', e)
+        }
+    }
+}
 
 export const editAPatient = (data) => {
     return async (dispatch, getState) => {

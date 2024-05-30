@@ -40,7 +40,7 @@ class Login extends Component {
         })
         try {
             let data = await handleLoginApi(this.state.username, this.state.password);
-
+            console.log('dâta', data)
             if (data && data.errCode !== 0) {
                 this.setState({
                     errMessage: data.message,
@@ -51,6 +51,7 @@ class Login extends Component {
                 this.props.userLoginSuccess(data.user)
 
             }
+            localStorage.setItem('jwt', data.access_token)
         } catch (error) {
             if (error.response) {
                 if (error.response.data) {

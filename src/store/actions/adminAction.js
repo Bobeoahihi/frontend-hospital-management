@@ -3,6 +3,7 @@ import {
     getAllCodeService, createNewuserService, getAllUsers, deleteUserService,
     editUserService, getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService,
     getAllSpecialty, getAllClinic, deleteSpecialty, editSpecialty, createNewSpecialty,
+    createNewClinic, editClinic, deleteClinic,
 } from '../../services/userService';
 // export const fetchGenderStart = () => ({
 //     type: actionTypes.FETCH_GENDER_START
@@ -113,8 +114,6 @@ export const fetchAllUserStart = () => {
         try {
             let res = await getAllUsers("ALL");
             if (res && res.errCode === 0) {
-                console.log('res.users', res.users)
-                console.log('res.users reverse', res.users.reverse())
                 dispatch(fetchAllUsersSuccess(res.users.reverse()));
             } else {
                 toast.error('Fetch all user error!')
@@ -350,7 +349,6 @@ export const fetchAllSpecialtyStart = () => {
         try {
             let res = await getAllSpecialty();
             if (res && res.errCode === 0) {
-                console.log('res.data.reverse()', res.data.reverse())
                 dispatch(fetchAllSpecialtySuccess(res.data.reverse()));
             } else {
                 toast.error('Fetch all user error!')
@@ -421,6 +419,107 @@ export const EditSpecialtySuccess = () => ({
 })
 export const EditSpecialtyFailed = () => ({
     type: actionTypes.EDIT_SPECIALTY_FAILED
+})
+
+export const createANewClinic = (data) => {
+    return async (dispatch, getState) => {
+        try {
+
+            let res = await createNewClinic(data);
+            if (res && res.errCode === 0) {
+                toast.success('Create clinic success')
+                dispatch(saveClinicSuccess());
+                dispatch(fetchAllClinicStart());
+            } else {
+                toast.error('Create clinic failed')
+                dispatch(saveClinicFailed());
+            }
+        } catch (e) {
+            dispatch(saveSpecialtyFailed());
+            console.log("saveClinicFailed Error", e)
+        }
+    }
+}
+export const saveClinicSuccess = () => ({
+    type: actionTypes.CREATE_CLINIC_SUCCESS
+})
+export const saveClinicFailed = () => ({
+    type: actionTypes.CREATE_CLINIC_FAILED
+})
+export const fetchAllClinicStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllClinic();
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllClinicSuccess(res.data.reverse()));
+            } else {
+                toast.error('Fetch all clinic error!')
+                dispatch(fetchAllClinicFailed());
+            }
+        } catch (e) {
+            dispatch(fetchAllClinicFailed());
+            console.log("fetchAllClinicStart Error", e)
+        }
+    }
+}
+export const fetchAllClinicSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_CLINIC_SUCCESS,
+    clinics: data
+})
+export const fetchAllClinicFailed = () => ({
+    type: actionTypes.FETCH__ALL_CLINIC_FAILED
+})
+
+export const deleteAClinic = (clinicId) => {
+    return async (dispatch, getState) => {
+        try {
+
+            let res = await deleteClinic(clinicId);
+            // console.log('check create user redux', res)
+            if (res && res.errCode === 0) {
+                toast.success('Delete clinic success!')
+                dispatch(deleteClinicSuccess());
+                dispatch(fetchAllClinicStart());
+            } else {
+                toast.error('Delete clinic error!')
+                dispatch(deleteClinicFailed());
+            }
+        } catch (e) {
+            dispatch(deleteClinicFailed());
+            console.log("Delete-clinic Error", e)
+        }
+    }
+}
+export const deleteClinicSuccess = () => ({
+    type: actionTypes.DELETE_CLINIC_SUCCESS
+})
+export const deleteClinicFailed = () => ({
+    type: actionTypes.DELETE_CLINIC_FAILED
+})
+
+export const editAClinic = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await editClinic(data);
+            if (res && res.errCode === 0) {
+                toast.success('Update speacialty success')
+                dispatch(EditClinicSuccess());
+                dispatch(fetchAllClinicStart());
+            } else {
+                dispatch(EditClinicFailed());
+            }
+        } catch (e) {
+            toast.error("Update clinic error!")
+            dispatch(EditClinicFailed());
+            console.log("EditClinicFailed Error", e)
+        }
+    }
+}
+export const EditClinicSuccess = () => ({
+    type: actionTypes.EDIT_CLINIC_SUCCESS
+})
+export const EditClinicFailed = () => ({
+    type: actionTypes.EDIT_CLINIC_FAILED
 })
 
 // let res1 = await getTopDoctorHomeService(3);

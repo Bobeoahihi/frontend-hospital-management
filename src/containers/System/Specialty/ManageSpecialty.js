@@ -63,7 +63,6 @@ class ManageSpecialty extends Component {
     handleOnChangeImage = async (event) => {
         let data = event.target.files;
         let file = data[0];
-        console.log('check data', file)
         if (file) {
             let base64 = await CommonUtils.getBase64(file)
             let objectUrl = URL.createObjectURL(file)
@@ -95,9 +94,8 @@ class ManageSpecialty extends Component {
         let isValid = this.checkValidateInput();
         if (isValid === false) return;
         let { action } = this.state;
-        let res = ''
         if (action === CRUD_ACTIONS.CREATE) {
-            let res = await this.props.createANewSpecialty({
+            this.props.createANewSpecialty({
                 name: this.state.name,
                 imageBase64: this.state.imageBase64,
                 descriptionHTML: this.state.descriptionHTML,
@@ -106,25 +104,13 @@ class ManageSpecialty extends Component {
 
         }
         if (action === CRUD_ACTIONS.EDIT) {
-            let res = this.props.editASpecialtyRedux({
+            this.props.editASpecialtyRedux({
                 name: this.state.name,
                 imageBase64: this.state.imageBase64,
                 descriptionHTML: this.state.descriptionHTML,
                 descriptionMarkdown: this.state.descriptionHTML,
                 id: this.state.specialtyEditId,
-            }
-
-            )
-
-            if (res) {
-                this.setState({
-                    name: '',
-                    imageBase64: '',
-                    descriptionHTML: '',
-                    descriptionMarkdown: '',
-                    previewImgUrl: '',
-                })
-            }
+            })
         }
     }
     checkValidateInput = () => {
@@ -208,7 +194,7 @@ class ManageSpecialty extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
-        listSpecialties: state.admin.listSpecialties,
+        listSpecialties: state.admin.specialties,
     };
 };
 

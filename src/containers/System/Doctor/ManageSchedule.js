@@ -130,6 +130,7 @@ class ManageSchedule extends Component {
         // console.log('check state', this.state)
         let { rangeTime } = this.state
         let { language } = this.props
+        console.log('rangeTime', rangeTime)
         let yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
         return (
             <React.Fragment>

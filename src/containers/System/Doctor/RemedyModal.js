@@ -14,6 +14,7 @@ class RemedyModal extends Component {
         this.state = {
             email: '',
             imgBase64: '',
+            selectedFile: null,
         }
     }
     async componentDidMount() {
@@ -56,13 +57,16 @@ class RemedyModal extends Component {
     handleOnChangeImage = async (event) => {
         let data = event.target.files;
         let file = data[0];
+        console.log('file', file)
         if (file) {
             let base64 = await CommonUtils.getBase64(file)
             let objectUrl = URL.createObjectURL(file)
             this.setState({
-                imgBase64: base64
+                imgBase64: base64,
+                selectedFile: file
             })
         }
+
     }
     handleSendRemedy = () => {
         this.props.sendRemedy(this.state)

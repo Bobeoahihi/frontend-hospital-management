@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import './BookingHistory.scss'
 import HomeHeader from '../../HomePage/HomeHeader';
 import moment from 'moment';
-import { getAllAppointmentHistory } from '../../../services/userService';
+import { downloadFileAttachment, getAllAppointmentHistory } from '../../../services/userService';
 class BookingHistory extends Component {
     constructor(props) {
         super(props)
@@ -32,7 +32,9 @@ class BookingHistory extends Component {
 
         }
     }
-
+    downloadFile = async (fileName) => {
+        await downloadFileAttachment(fileName)
+    }
 
     render() {
         let { dataPatient, date } = this.state
@@ -77,7 +79,7 @@ class BookingHistory extends Component {
                                                 <td>{item.doctorDataBooking.Doctor_infor.nameClinic}</td>
                                                 <td>{item.doctorDataBooking.Doctor_infor.addressClinic}</td>
                                                 <td>{status}</td>
-                                                <td></td>
+                                                <td onClick={() => this.downloadFile(item.History ? item.History.files : null)}><span>{item.History ? item.History.files : 'Không có dữ liệu'}</span></td>
                                             </tr>
                                         )
                                     })

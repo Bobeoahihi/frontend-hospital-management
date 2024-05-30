@@ -34,6 +34,9 @@ export const adminMenu = [
             {
                 name: 'menu.admin.manage-clinic', link: '/system/manage-clinic'
             },
+            {
+                name: 'menu.admin.choose-clinic-specialty', link: '/system/choose-specialties'
+            },
 
         ]
     },
