@@ -4,8 +4,23 @@
         margin-top: 15px;
         margin-bottom: 15px;
         font-weight: 600;
-        font-size: 17px;
+        font-size: 20px;
         text-align: center;
+
+    }
+
+    .row {
+        border: 5px solid #0071ba;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin: 0 15px;
+
+        input,
+        .select {
+            border: 1px solid rgb(168, 162, 162);
+        }
     }
 
     .pick-hour-container {

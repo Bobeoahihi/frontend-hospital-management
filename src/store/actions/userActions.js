@@ -1,4 +1,4 @@
-import { deleteToken } from '../../services/userService';
+import { deleteTokenAdmin } from '../../services/userService';
 import actionTypes from './actionTypes';
 
 export const addUserSuccess = () => ({
@@ -24,7 +24,7 @@ export const userLoginFail = () => ({
 export const processLogout = () => {
     return async (dispatch, getState) => {
         try {
-            let res = await deleteToken()
+            await deleteTokenAdmin()
             // dispatch({ type: actionTypes.PROCESS_LOGOUT })
             dispatch(logoutSuccess())
         } catch (e) {

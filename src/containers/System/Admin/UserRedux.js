@@ -209,12 +209,12 @@ class UserRedux extends Component {
         return (
             <div className='user-redux-container'>
                 <div className='title'>
-                    Learn React-Redux - Tutorial
+                    Quản lý người dùng
                 </div>
                 <div className="user-redux-body" >
                     <div className='container'>
-                        <div className='row'>
-                            <div className='col-12 my-3'><FormattedMessage id="manage-user.add" /></div>
+                        <div className='col-12 my-3 add'><FormattedMessage id="manage-user.add" /></div>
+                        <div className='row row-user-manager'>
                             <div className='col-12'>{isGetGender === true ? "Loading genders" : ""}</div>
                             <div className='col-3'>
                                 <label><FormattedMessage id="manage-user.email" /></label>
@@ -329,12 +329,17 @@ class UserRedux extends Component {
                                     }
                                 </button>
                             </div>
-                            <div className='col-12 mb-5'>
+                            {/* <div className='col-12 mb-5'>
                                 <TableManageUser
                                     handleEditUserFromParentKey={this.handleEditUserFromParent}
                                     action={this.state.action} />
-                            </div>
+                            </div> */}
 
+                        </div>
+                        <div className='col-12 mb-5'>
+                            <TableManageUser
+                                handleEditUserFromParentKey={this.handleEditUserFromParent}
+                                action={this.state.action} />
                         </div>
 
                     </div>

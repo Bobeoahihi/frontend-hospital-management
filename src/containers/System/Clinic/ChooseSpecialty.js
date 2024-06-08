@@ -122,6 +122,7 @@ class ChooseSpecialty extends Component {
                                     value={this.state.selectedClinics}
                                     onChange={this.handleChangeSelect}
                                     options={this.state.listClinics}
+                                    className='select'
                                 />
                             </div>
                             <div className='col-12 pick-hour-container'>

@@ -130,6 +130,7 @@ class ManageSpecialty extends Component {
         return (
             < div className='manage-specialty-container' >
                 <div className='ms-title'> Quản lý chuyên khoa</div>
+                <div className='col-12 my-3 add'>Thêm/sửa chuyên khoa</div>
                 <div className='add-new-specialty row'>
                     <div className='col-6 form-group'>
                         <label>Tên chuyên khoa</label>
@@ -172,12 +173,12 @@ class ManageSpecialty extends Component {
                             }
                         </button>
                     </div>
-                    <div className='col-12 mb-5'>
-                        <TableManageSpecialties
-                            handleEditSpecialtyFromParentKey={this.handleEditSpecialtyFromParent}
-                            action={this.state.action}
-                        />
-                    </div>
+                </div>
+                <div className='col-12 mb-5'>
+                    <TableManageSpecialties
+                        handleEditSpecialtyFromParentKey={this.handleEditSpecialtyFromParent}
+                        action={this.state.action}
+                    />
                 </div>
                 {this.state.isOpen === true &&
                     <Lightbox

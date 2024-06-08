@@ -9,7 +9,8 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
-
+import ReactPaginate from 'react-paginate'
+import { getUserPaginate } from '../../../services/userService'
 // Register plugins if required
 // MdEditor.use(YOUR_PLUGINS_HERE);
 
@@ -30,11 +31,24 @@ class TableManageUser extends Component {
         super(props);
         this.state = {
             usersRedux: [],
-
+            specialtyList: [],
+            currentPage: 1,
+            currentLimit: 10,
+            totalPages: 0,
         }
     }
     componentDidMount() {
         this.props.fetchUserRedux();
+        this.fetchClinicPaginate()
+    }
+    fetchClinicPaginate = async (page) => {
+        let response = await getUserPaginate(page ? page : this.state.currentPage, this.state.currentLimit)
+        if (response && response.data) {
+            this.setState({
+                totalPages: response.data.totalPages,
+                usersRedux: response.data.users
+            })
+        }
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.listUsers !== this.props.listUsers) {
@@ -49,9 +63,15 @@ class TableManageUser extends Component {
     handleEditUser = (user) => {
         this.props.handleEditUserFromParentKey(user)
     }
-
+    handlePageClick = async (event) => {
+        this.setState({
+            currentPage: +event.selected + 1,
+        })
+        await this.fetchClinicPaginate(+event.selected + 1)
+    };
     render() {
         let arrUsers = this.state.usersRedux
+        let { totalPages } = this.state
         return (
             <React.Fragment>
                 {/* <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} /> */}
@@ -89,6 +109,32 @@ class TableManageUser extends Component {
 
                     </tbody>
                 </table>
+                {totalPages &&
+                    <div className='clinic-footer'>
+                        <ReactPaginate
+
+
+                            nextLabel="next >"
+                            onPageChange={this.handlePageClick}
+                            pageRangeDisplayed={3}
+                            marginPagesDisplayed={2}
+                            pageCount={totalPages}
+                            previousLabel="< previous"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            breakLabel="..."
+                            breakClassName="page-item"
+                            breakLinkClassName="page-link"
+                            containerClassName="pagination"
+                            activeClassName="active"
+                            renderOnZeroPageCount={null}
+                        />
+                    </div>
+                }
             </React.Fragment>
 
         );

@@ -1,22 +1,45 @@
-.preview-img-container {
+.user-redux-container {
+    .title {
+        color: black;
+    }
 
-    .label-upload {
-        padding: 5px;
-        border-radius: 3px;
-        background: #ddd;
-        cursor: pointer;
+    .preview-img-container {
 
-        &:hover {
-            opacity: 0.9;
+        .label-upload {
+            padding: 5px;
+            border-radius: 3px;
+            background: #ddd;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+
+        .preview-image {
+            height: 50px;
+            width: 100%;
+            border: 1px solid rgb(181, 177, 177);
+            background: center center no-repeat;
+            background-size: contain;
+            cursor: pointer;
         }
     }
 
-    .preview-image {
-        height: 50px;
-        width: 100%;
-        border: 1px solid rgb(181, 177, 177);
-        background: center center no-repeat;
-        background-size: contain;
-        cursor: pointer;
+    .add {
+        font-weight: 600;
+    }
+
+    .row-user-manager {
+        border: 5px solid #0071ba;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        input,
+        select {
+            border: 1px solid rgb(168, 162, 162);
+        }
     }
 }

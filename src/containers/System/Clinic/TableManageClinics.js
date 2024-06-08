@@ -13,7 +13,7 @@ class TableManageClinics extends Component {
         this.state = {
             clinicList: [],
             currentPage: 1,
-            currentLimit: 2,
+            currentLimit: 5,
             totalPages: 0,
 
         }
@@ -62,7 +62,7 @@ class TableManageClinics extends Component {
                             <th>Số thứ tự</th>
                             <th>Tên Cơ sở y tế</th>
                             <th>Địa chỉ</th>
-                            <th>Nội dung</th>
+                            {/* <th>Nội dung</th> */}
                             <th>Actions</th>
                         </tr>
                         {clinicList && clinicList.length > 0 &&
@@ -72,7 +72,7 @@ class TableManageClinics extends Component {
                                         <td>{index + 1}</td>
                                         <td>{item.name}</td>
                                         <td>{item.address}</td>
-                                        <td>{item.descriptionMarkdown}</td>
+                                        {/* <td>{item.descriptionMarkdown}</td> */}
                                         <td>
                                             <button className='btn-edit'
                                                 onClick={() => this.handleEditClinic(item)}

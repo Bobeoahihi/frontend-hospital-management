@@ -2,9 +2,9 @@ export const adminMenu = [
     {//Quản lý người dùng
         name: 'menu.admin.manage-user',
         menus: [
-            {
-                name: 'menu.admin.crud', link: '/system/user-manage'
-            },
+            // {
+            //     name: 'menu.admin.crud', link: '/system/user-manage'
+            // },
             {
                 name: 'menu.admin.crud-redux', link: '/system/user-redux'
             },
@@ -18,11 +18,11 @@ export const adminMenu = [
             // {
             //     name: 'menu.admin.manage-admin', link: '/system/manage-admin'
             // },
-            //Quản lý kế hoạch khám bệnh của bác sĩ
+            // //Quản lý kế hoạch khám bệnh của bác sĩ
 
-            {
-                name: 'menu.doctor.manage-schedule', link: '/doctor/manage-schedule'
-            },
+            // {
+            //     name: 'menu.doctor.manage-schedule', link: '/doctor/manage-schedule'
+            // },
 
 
 
@@ -91,6 +91,9 @@ export const managerMenu = [
         menus: [
             {
                 name: 'menu.admin.manage-specialty', link: '/system/manage-specialty'
+            },
+            {
+                name: 'menu.admin.choose-clinic-specialty', link: '/system/choose-specialties'
             },
 
         ]

@@ -223,7 +223,7 @@ class DetailPatient extends Component {
                                         <button className="btn btn-primary profile-button" type="button"
                                             onClick={() => this.handleEditPatient()}
                                         >
-                                            Luu thong tin
+                                            Lưu thông tin
                                         </button>
                                     </div>
                                 </div>

@@ -7,6 +7,8 @@ import { adminMenu, doctorMenu, managerMenu } from './menuApp';
 import './Header.scss';
 import { LANGUAGE, USER_ROLE } from '../../utils';
 import _ from 'lodash';
+import { push } from "connected-react-router";
+import { withRouter } from 'react-router';
 class Header extends Component {
     constructor(props) {
         super(props)
@@ -21,17 +23,32 @@ class Header extends Component {
     }
     componentDidMount() {
         let { userInfo } = this.props;
+        const currentPath = this.props.location.pathname;
+        const { navigate } = this.props;
         let menu = []
         //Phan quyen nguoi dung: 4 roles: admin, manager, doctor, patient
         if (userInfo && !_.isEmpty(userInfo)) {
             let role = userInfo.roleId
             if (role === USER_ROLE.ADMIN) {
+                if (currentPath === '/doctor/manage-schedule' || currentPath === '/doctor/manage-patient') {
+                    const redirectPath = '/system/user-redux';
+                    navigate(`${redirectPath}`);
+                }
+                console.log('menu', adminMenu[0].menus[0].link)
                 menu = adminMenu;
             }
             if (role === USER_ROLE.DOCTOR) {
+                if (currentPath !== '/doctor/manage-schedule' || currentPath !== '/doctor/manage-patient') {
+                    const redirectPath = '/doctor/manage-schedule';
+                    navigate(`${redirectPath}`);
+                }
                 menu = doctorMenu;
             }
             if (role === USER_ROLE.MANAGER) {
+                if (currentPath !== '/system/user-redux' || currentPath !== '/system/manage-specialty' || currentPath !== '/system/choose-specialties') {
+                    const redirectPath = '/system/user-redux';
+                    navigate(`${redirectPath}`);
+                }
                 menu = managerMenu;
             }
         }
@@ -39,6 +56,7 @@ class Header extends Component {
             menuApp: menu
         })
     }
+
     render() {
         const { processLogout, language, userInfo } = this.props;
         console.log(userInfo)
@@ -85,8 +103,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         processLogout: () => dispatch(actions.processLogout()),
-        changeLanguageAppRedux: (language) => dispatch(actions.changeLanguageApp(language))
+        changeLanguageAppRedux: (language) => dispatch(actions.changeLanguageApp(language)),
+        navigate: (path) => dispatch(push(path)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

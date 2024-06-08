@@ -24,10 +24,22 @@ class ManageSchedule extends Component {
     componentDidMount() {
         this.props.fetchAllDoctor();
         this.props.fetchAllScheduleTime();
+        let { language, userInfo, allDoctors } = this.props
+        console.log('u', userInfo)
+        console.log('u', allDoctors)
+        let labelVi = `${userInfo.lastName} ${userInfo.firstName}`
+        let labelEn = `${userInfo.firstName} ${userInfo.lastName}`
+        let doctorName = {}
+        doctorName.label = language === LANGUAGE.VI ? labelVi : labelEn;
+        doctorName.value = userInfo.id;
+        this.setState({
+            selectedDoctor: doctorName
+        })
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.allDoctors !== this.props.allDoctors) {
             let dataSelect = this.buildDataInputSelect(this.props.allDoctors)
+            console.log('input data', dataSelect)
             this.setState({
                 listDoctors: dataSelect
             })
@@ -42,9 +54,12 @@ class ManageSchedule extends Component {
             })
         }
         // if (prevProps.language !== this.props.language) {
-        //     let dataSelect = this.buildDataInputSelect(this.props.allDoctors)
+        //     let { userInfo, language } = this.props
+        //     let labelVi = `${userInfo.lastName} ${userInfo.firstName}`
+        //     let labelEn = `${userInfo.firstName} ${userInfo.lastName}`
+        //     let doctorName = language === LANGUAGE.VI ? labelVi : labelEn;
         //     this.setState({
-        //         listDoctors: dataSelect
+        //         selectedDoctor: doctorName,
         //     })
         // }
     }
@@ -86,7 +101,7 @@ class ManageSchedule extends Component {
         }
     }
     handleChangeSchedule = async () => {
-        let { rangeTime, listDoctors, currentDate, selectedDoctor } = this.state
+        let { rangeTime, currentDate, selectedDoctor } = this.state
         let result = []
         if (!currentDate) {
             toast.error('Invalid date!')
@@ -128,9 +143,14 @@ class ManageSchedule extends Component {
     render() {
         // console.log('check props', this.props)
         // console.log('check state', this.state)
-        let { rangeTime } = this.state
-        let { language } = this.props
-        console.log('rangeTime', rangeTime)
+        let { rangeTime, selectedDoctor } = this.state
+        let { language, userInfo, allDoctors } = this.props
+        console.log('u', userInfo)
+        console.log('u', allDoctors)
+        let labelVi = `${userInfo.lastName} ${userInfo.firstName}`
+        let labelEn = `${userInfo.firstName} ${userInfo.lastName}`
+        let doctorName = language === LANGUAGE.VI ? labelVi : labelEn;
+
         let yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
         return (
             <React.Fragment>
@@ -143,11 +163,12 @@ class ManageSchedule extends Component {
                         <div className='row'>
                             <div className='col-6 form-group'>
                                 <label><FormattedMessage id="manage-schedule.choose-doctor" /></label>
-                                <Select
+                                {/* <Select
                                     value={this.state.selectedDoctor}
                                     onChange={this.handleChangeSelect}
                                     options={this.state.listDoctors}
-                                />
+                                /> */}
+                                <label className='col-12 doctor-name'>{doctorName}</label>
                             </div>
                             <div className='col-6 form-group'>
                                 <label><FormattedMessage id="manage-schedule.choose-date" /></label>
@@ -188,6 +209,7 @@ class ManageSchedule extends Component {
 
 const mapStateToProps = state => {
     return {
+        userInfo: state.user.userInfo,
         isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
         allDoctors: state.admin.allDoctors,

@@ -1,6 +1,7 @@
 import actionTypes from './actionTypes';
 import { postNewPatient, postLoginPatient, postEditPatient, getAccountPatient } from '../../services/userService';
 import { toast } from 'react-toastify';
+import { deleteToken } from '../../services/userService';
 export const createNewPatient = (data) => {
     return async (dispatch, getState) => {
         try {
@@ -40,6 +41,7 @@ export const patientLogin = (data) => {
             if (res && res.errCode === 0) {
                 toast.success('Login success')
                 dispatch(patientLoginSuccess(res.user));
+                return res;
             } else {
                 if (res && res.errCode === -1) {
                     toast.error('Missing required parameter')
@@ -58,8 +60,10 @@ export const patientLogin = (data) => {
                     dispatch(patientLoginFail());
                 }
                 else {
+                    toast.error(`Try to login again!`)
                     dispatch(patientLoginFail());
                 }
+                return res
             }
         } catch (e) {
             dispatch(patientLoginFail());
@@ -77,8 +81,9 @@ export const patientLoginFail = () => ({
 })
 
 export const processPatientLogout = () => {
-    return (dispatch, getState) => {
+    return async (dispatch, getState) => {
         try {
+            let res = await deleteToken()
             toast.success('Logout successfully!')
             dispatch(patientLogoutSuccess())
         } catch (e) {

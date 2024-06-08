@@ -182,14 +182,14 @@ class ManageClinic extends Component {
                             }
                         </button>
                     </div>
-                    <div className='col-12 mb-5'>
-                        <TableManageClinics
-                            handleEditClinicFromParentKey={this.handleEditClinicFromParent}
-                            action={this.state.action}
-                        />
-                    </div>
                 </div>
 
+                <div className='col-12 mb-5'>
+                    <TableManageClinics
+                        handleEditClinicFromParentKey={this.handleEditClinicFromParent}
+                        action={this.state.action}
+                    />
+                </div>
             </div >
 
         );

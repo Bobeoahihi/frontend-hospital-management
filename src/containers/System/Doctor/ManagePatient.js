@@ -64,6 +64,16 @@ class ManagePatient extends Component {
             dataModal: data,
         })
     }
+    handleBtnCancel = (item) => {
+        let data = {
+            doctorId: item.doctorId,
+            patientId: item.patientId,
+            email: item.patientData.email,
+            timeType: item.timeType,
+            patientName: item.patientData.firstName,
+
+        }
+    }
     closeRemedyModal = () => {
         this.setState({
             isOpenRemedyModal: false,
@@ -110,11 +120,11 @@ class ManagePatient extends Component {
                 >
                     < div className='manage-patient-container'>
                         <div className='m-p-title'>
-                            Quan ly benh nhan kham benh
+                            Danh sách lịch khám bệnh
                         </div>
                         <div className='manage-patient-body row'>
                             <div className='col-4 form-group'>
-                                <label>Chon ngay kham</label>
+                                <label>Chọn thời gian khám</label>
                                 <DatePicker
                                     onChange={this.handleOnChangeDatePicker}
                                     className='form-control'
@@ -148,7 +158,9 @@ class ManagePatient extends Component {
                                                         <td>{gender}</td>
                                                         <td>
                                                             <button className='mp-btn-confirm'
-                                                                onClick={() => this.handleBtnConfirm(item)}>Xac nhan</button>
+                                                                onClick={() => this.handleBtnConfirm(item)}>Xác nhận</button>
+                                                            <button className='mp-btn-cancel'
+                                                                onClick={() => this.handleBtnCancel(item)}>Hủy bỏ</button>
                                                         </td>
                                                     </tr>
                                                 )

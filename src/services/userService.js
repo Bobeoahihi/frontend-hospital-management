@@ -6,7 +6,11 @@ const refreshToken = () => {
 }
 const deleteToken = () => {
     localStorage.clear()
-    return axios.post('/api/clear')
+    return axios.post('/api/clearToken')
+}
+const deleteTokenAdmin = () => {
+    localStorage.clear()
+    return axios.post('/api/clearTokenAdmin')
 }
 
 const handleLoginApi = (userEmail, userPassword) => {
@@ -21,7 +25,9 @@ const handleLoginApi = (userEmail, userPassword) => {
 const getAllUsers = (inputId) => {
     return axios.get(`/api/get-all-users?id=${inputId}`)
 }
-
+const getUserPaginate = (page, limit) => {
+    return axios.get(`/api/get-user-paginate?page=${page}&limit=${limit}`)
+}
 const createNewuserService = (data) => {
     console.log('check data from service: ', data)
     return axios.post('/api/create-new-user', data)
@@ -93,6 +99,9 @@ const createNewSpecialty = (data) => {
 }
 const getAllSpecialty = () => {
     return axios.get(`/api/get-specialty`)
+}
+const getSpecialtyPaginate = (page, limit) => {
+    return axios.get(`/api/get-specialty-paginate?page=${page}&limit=${limit}`)
 }
 const getAllDetailSpecialtyById = (data) => {
     return axios.get(`/api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`)
@@ -190,4 +199,5 @@ export {
     getAllAppointmentHistory, editSpecialty, deleteSpecialty,
     editClinic, deleteClinic, saveBulkSpecialtyClinic, getClinicPaginate,
     refreshToken, deleteToken, downloadFileAttachment, getAccountPatient,
+    getSpecialtyPaginate, getUserPaginate, deleteTokenAdmin,
 }

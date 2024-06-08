@@ -6,6 +6,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import _ from 'lodash';
 import { LANGUAGE, CRUD_ACTIONS } from '../../../utils';
 import * as actions from '../../../store/actions'
+import { withRouter } from 'react-router-dom';
 class LoginPatient extends Component {
     constructor(props) {
         super(props)
@@ -102,10 +103,19 @@ class LoginPatient extends Component {
         if (isValid === false) return;
         //fire redux create user
         if (action === CRUD_ACTIONS.LOGIN) {
-            this.props.patientLogin({
+            let res = await this.props.patientLogin({
                 email: this.state.email,
                 password: this.state.password,
             })
+            console.log('check res account', res)
+            if (res && res.user && res.errMessage === 0) {
+
+                let data = {
+                    token: 'he'
+                }
+                sessionStorage.setItem('account', JSON.stringify(data))
+                this.props.history.push('/user')
+            }
         }
         //fire redux edit user
         if (action === CRUD_ACTIONS.REGISTER) {
@@ -274,4 +284,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPatient);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPatient));
