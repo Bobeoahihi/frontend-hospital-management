@@ -97,9 +97,9 @@ class HomeHeader extends Component {
                                 </div>
                                 :
                                 <div className='patient-avatar'>
-                                    <div className='patient-img' style={{ backgroundImage: `url(${patientInfo && patientInfo.image ? patientInfo.image : ''})` }}
+                                    <div className='patient-img'
                                         onClick={() => this.handleAvatarClick()}
-                                    ></div>
+                                    ><i className="fa fa-user" aria-hidden="true"></i></div>
                                     {openPatientInfor && <InforDropdown
                                         patientInfo={patientInfo}
                                     />}

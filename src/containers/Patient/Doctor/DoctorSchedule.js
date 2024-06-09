@@ -8,6 +8,7 @@ import { LANGUAGE } from '../../../utils'
 import { getScheduleDoctorByDate } from '../../../services/userService'
 import { FormattedMessage } from 'react-intl';
 import BookingModal from './Modal/BookingModal';
+import LoginPatient from '../Login-Register/LoginPatient'
 class DoctorSchedule extends Component {
     constructor(props) {
         super(props)
@@ -15,7 +16,9 @@ class DoctorSchedule extends Component {
             allDay: [],
             allAvailableTime: [],
             isOpenModalBooking: false,
-            dataScheduleTimeModal: {}
+            dataScheduleTimeModal: {},
+            //Check login
+            isOpenLogin: false,
         }
     }
     async componentDidMount() {
@@ -31,10 +34,8 @@ class DoctorSchedule extends Component {
         this.setState({
             allDay: allDay,
         })
-
-
-
     }
+
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.language !== prevProps.language) {
             let allDay = this.getArrayDays(this.props.language)
@@ -49,6 +50,16 @@ class DoctorSchedule extends Component {
                 allAvailableTime: res.data ? res.data : []
             })
         }
+    }
+    openLogin = (openLogin) => {
+        this.setState({
+            isOpenLogin: openLogin
+        })
+    }
+    closeLogin = () => {
+        this.setState({
+            isOpenLogin: false
+        })
     }
     capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
@@ -98,10 +109,16 @@ class DoctorSchedule extends Component {
         }
     }
     handleClickScheduleTime = (time) => {
-        this.setState({
-            isOpenModalBooking: true,
-            dataScheduleTimeModal: time,
-        })
+        if (this.props.patientInfo) {
+            this.setState({
+                isOpenModalBooking: true,
+                dataScheduleTimeModal: time,
+            })
+        } else {
+            this.setState({
+                isOpenLogin: true
+            })
+        }
     }
     closeBookingModal = () => {
         this.setState({
@@ -110,7 +127,7 @@ class DoctorSchedule extends Component {
     }
 
     render() {
-        let { allDay, allAvailableTime, isOpenModalBooking, dataScheduleTimeModal } = this.state
+        let { allDay, allAvailableTime, isOpenModalBooking, dataScheduleTimeModal, isOpenLogin } = this.state
         let { language, patientInfo } = this.props;
         return (
             <>
@@ -172,12 +189,21 @@ class DoctorSchedule extends Component {
                         </div>
                     </div>
                 </div >
-                <BookingModal
-                    isOpenModal={isOpenModalBooking}
-                    closeBookingModal={this.closeBookingModal}
-                    dataTime={dataScheduleTimeModal}
-                    patient={patientInfo}
-                />
+
+                {patientInfo ?
+                    <BookingModal
+                        isOpenModal={isOpenModalBooking}
+                        closeBookingModal={this.closeBookingModal}
+                        dataTime={dataScheduleTimeModal}
+                        patient={patientInfo}
+                    />
+                    :
+                    <LoginPatient
+                        isOpenLogin={isOpenLogin}
+                        closeLogin={this.closeLogin}
+                    // getUserInfor={(data) => this.getUserInfor(data)}
+                    />
+                }
             </>
         );
     }

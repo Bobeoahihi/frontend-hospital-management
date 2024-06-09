@@ -79,6 +79,9 @@ const postPatientBookAppointment = (data) => {
 const postVerifyBookAppointment = (data) => {
     return axios.post(`/api/verify-book-appointment`, data)
 }
+const postCancelBookAppointment = (data) => {
+    return axios.post(`/api/cancel-book-appointment`, data)
+}
 const postNewPatient = (data) => {
     return axios.post(`/api/create-new-patient`, data)
 }
@@ -160,19 +163,23 @@ const postSendRemedy = (dataAxios) => {
     })
 }
 const downloadFileAttachment = (fileName) => {
-    axios.get(`/api/get-file-appoinment?filename=${fileName}`, { responseType: 'arraybuffer', }).then(response => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', fileName);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-    })
+    axios.get(`/api/get-file-appoinment?filename=${fileName}`, { responseType: 'arraybuffer', })
+        .then(response => {
+            const url = window.URL.createObjectURL(new Blob([response]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+        }
+        )
         .catch(error => {
             console.error('Lỗi khi tải tệp', error);
         });
 }
+
 const getPatientById = (patientId) => {
     return axios.get(`api/get-patient-by-id?id=${patientId}`)
 }
@@ -199,5 +206,5 @@ export {
     getAllAppointmentHistory, editSpecialty, deleteSpecialty,
     editClinic, deleteClinic, saveBulkSpecialtyClinic, getClinicPaginate,
     refreshToken, deleteToken, downloadFileAttachment, getAccountPatient,
-    getSpecialtyPaginate, getUserPaginate, deleteTokenAdmin,
+    getSpecialtyPaginate, getUserPaginate, deleteTokenAdmin, postCancelBookAppointment,
 }

@@ -38,7 +38,10 @@ class Header extends Component {
                 menu = adminMenu;
             }
             if (role === USER_ROLE.DOCTOR) {
-                if (currentPath !== '/doctor/manage-schedule' || currentPath !== '/doctor/manage-patient') {
+                console.log('curent', currentPath)
+                if (currentPath === '/doctor/manage-schedule' || currentPath === '/doctor/manage-patient') {
+
+                } else {
                     const redirectPath = '/doctor/manage-schedule';
                     navigate(`${redirectPath}`);
                 }

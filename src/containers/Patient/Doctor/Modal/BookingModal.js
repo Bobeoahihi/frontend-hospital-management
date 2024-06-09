@@ -121,18 +121,19 @@ class BookingModal extends Component {
     }
     handleConfirmBooking = async () => {
         //validate input
-        let date = new Date(this.state.birthday).getTime()
+        // let date = new Date(this.state.birthday).getTime()
         let timeString = this.buildTimeBooking(this.props.dataTime)
         let doctorName = this.buildDoctorName(this.props.dataTime)
 
         let res = await postPatientBookAppointment({
+            id: this.props.patient.id,
             fullName: this.state.fullName,
             phoneNumber: this.state.phoneNumber,
             email: this.state.email,
             address: this.state.address,
             reason: this.state.reason,
             date: this.props.dataTime.date,
-            birthday: date,
+            // birthday: date,
             selectedGender: this.state.selectedGender.value,
             doctorId: this.state.doctorId,
             timeType: this.state.timeType,
@@ -210,6 +211,16 @@ class BookingModal extends Component {
                             </div>
                             <div className='col-6 form-group'>
                                 <label>
+                                    <FormattedMessage id='patient.booking-modal.gender' />
+                                </label>
+                                <Select
+                                    value={this.state.selectedGender}
+                                    onChange={this.handleChangeSelect}
+                                    options={this.state.genders}
+                                />
+                            </div>
+                            <div className='col-12 form-group'>
+                                <label>
                                     <FormattedMessage id='patient.booking-modal.address' />
                                 </label>
                                 <input className='form-control'
@@ -226,7 +237,8 @@ class BookingModal extends Component {
                                     onChange={(event) => this.handleOnChangeInput(event, 'reason')}
                                 />
                             </div>
-                            <div className='col-6 form-group'>
+
+                            {/* <div className='col-6 form-group'>
                                 <label>
                                     <FormattedMessage id='patient.booking-modal.birthday' />
                                 </label>
@@ -236,17 +248,8 @@ class BookingModal extends Component {
                                     value={this.state.birthday}
                                 // minDate={yesterday}
                                 />
-                            </div>
-                            <div className='col-6 form-group'>
-                                <label>
-                                    <FormattedMessage id='patient.booking-modal.gender' />
-                                </label>
-                                <Select
-                                    value={this.state.selectedGender}
-                                    onChange={this.handleChangeSelect}
-                                    options={this.state.genders}
-                                />
-                            </div>
+                            </div> */}
+
                         </div>
                     </div>
                     <div className='booking-modal-footer'>
@@ -273,6 +276,7 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         genders: state.admin.genders,
+        patientInfo: state.patient.patientInfo,
     };
 };
 

@@ -39,7 +39,7 @@ class BookingHistory extends Component {
     render() {
         let { dataPatient, date } = this.state
         let { language } = this.props
-        let dateForm = moment(date).format('DD/MM/YYYY')
+        let dateForm = moment(parseInt(date)).format('DD/MM/YYYY')
         console.log('date', dateForm)
         return (
             <>
@@ -74,7 +74,7 @@ class BookingHistory extends Component {
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
                                                 <td>{time}</td>
-                                                <td>{`${moment(item.date).format('DD/MM/YYYY')}`}</td>
+                                                <td>{moment(parseInt(item.date)).format('DD/MM/YYYY')}</td>
                                                 <td>{`${item.doctorDataBooking.lastName} ${item.doctorDataBooking.firstName}`}</td>
                                                 <td>{item.doctorDataBooking.Doctor_infor.nameClinic}</td>
                                                 <td>{item.doctorDataBooking.Doctor_infor.addressClinic}</td>

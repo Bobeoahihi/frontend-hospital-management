@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './ManageDoctor.scss'
 import * as actions from "../../../store/actions";
-
+import { io } from 'socket.io-client';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 // import style manually
@@ -19,6 +19,7 @@ const options = [
 ];
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */);
+
 
 
 
@@ -59,6 +60,8 @@ class ManageDoctor extends Component {
     componentDidMount() {
         this.props.fetchAllDoctor()
         this.props.getAllRequiredDoctorInfor()
+        let socket = io("http://localhost:5000")
+        console.log('socketsdfj;', socket)
     }
     buildDataInputSelect = (inputData, type) => {
         let result = [];
