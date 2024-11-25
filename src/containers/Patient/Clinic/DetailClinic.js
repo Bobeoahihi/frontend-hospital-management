@@ -62,7 +62,7 @@ class DetailClinic extends Component {
                     <div className='description-specialty'>
                         {dataDetailClinic && !_.isEmpty(dataDetailClinic) &&
                             <>
-                                <div>{dataDetailClinic.name}</div>
+                                <div className='title-clinic'>{dataDetailClinic.name}</div>
                                 <div dangerouslySetInnerHTML={{ __html: dataDetailClinic.descriptionHTML }}>
                                 </div>
                             </>

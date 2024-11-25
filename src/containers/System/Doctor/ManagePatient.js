@@ -37,7 +37,7 @@ class ManagePatient extends Component {
         await this.getDataPatient()
         await this.createNewMsg()
         await this.listenNewMsg()
-        await this.sendNewMsg()
+        // await this.sendNewMsg()
     }
     // async componentDidUpdate(prevProps, prevState) {
     //     if (this.state.socket && this.state.user) {

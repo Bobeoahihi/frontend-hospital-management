@@ -102,7 +102,7 @@ class ManageClinic extends Component {
                 address: this.state.address,
                 imageBase64: this.state.imageBase64,
                 descriptionHTML: this.state.descriptionHTML,
-                descriptionMarkdown: this.state.descriptionHTML,
+                descriptionMarkdown: this.state.descriptionMarkdown,
             })
 
         }
@@ -112,7 +112,7 @@ class ManageClinic extends Component {
                 address: this.state.address,
                 imageBase64: this.state.imageBase64,
                 descriptionHTML: this.state.descriptionHTML,
-                descriptionMarkdown: this.state.descriptionHTML,
+                descriptionMarkdown: this.state.descriptionMarkdown,
                 id: this.state.specialtyEditId,
             })
         }
@@ -134,6 +134,7 @@ class ManageClinic extends Component {
         return (
             < div className='manage-clinic-container' >
                 <div className='ms-title'> Quản lý cơ sở khám bệnh</div>
+                <div className='col-12 my-3 add'>Thêm/sửa phòng khám</div>
                 <div className='add-new-clinic row'>
                     <div className='col-6 form-group'>
                         <label>Tên cơ sở khám bệnh</label>

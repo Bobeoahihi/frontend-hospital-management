@@ -3,6 +3,17 @@
         background-color: white !important;
         padding: 10px;
         margin: 15px 0;
+
+        .title-clinic {
+            font-weight: 600;
+            font-size: 30px;
+            position: relative;
+            text-align: start;
+            margin: 20px 0;
+            padding: 10px;
+            left: 0;
+            border: solid 1px black;
+        }
     }
 
     h1,

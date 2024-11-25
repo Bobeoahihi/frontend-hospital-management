@@ -83,6 +83,7 @@ class VerifyEmail extends Component {
             receivedId: doctorId,
             date: date
         }
+        console.log('data', data)
         socket?.emit('sendNotification', data, (response) => {
             this.disconnect();
         })

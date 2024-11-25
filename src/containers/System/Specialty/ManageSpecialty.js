@@ -99,7 +99,7 @@ class ManageSpecialty extends Component {
                 name: this.state.name,
                 imageBase64: this.state.imageBase64,
                 descriptionHTML: this.state.descriptionHTML,
-                descriptionMarkdown: this.state.descriptionHTML,
+                descriptionMarkdown: this.state.descriptionMarkdown,
             })
 
         }
@@ -108,7 +108,7 @@ class ManageSpecialty extends Component {
                 name: this.state.name,
                 imageBase64: this.state.imageBase64,
                 descriptionHTML: this.state.descriptionHTML,
-                descriptionMarkdown: this.state.descriptionHTML,
+                descriptionMarkdown: this.state.descriptionMarkdown,
                 id: this.state.specialtyEditId,
             })
         }
